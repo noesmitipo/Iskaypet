@@ -11,7 +11,7 @@ export const initDb = () => {
   });
 
   db.run(
-    "CREATE TABLE pets (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, kind TEXT NOT NULL, gender TEXT NOT NULL, birthdate TEXT)"
+    "CREATE TABLE pets (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, species TEXT NOT NULL, gender TEXT NOT NULL, birthdate TEXT)"
   );
 };
 

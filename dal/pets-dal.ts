@@ -3,11 +3,11 @@ import { CreatePetRequest, Pet } from "../models/pet";
 
 export const create = async (payload: CreatePetRequest): Promise<void> => {
   const sql =
-    "INSERT INTO pets (name, kind, gender, birthdate) VALUES (?, ?, ?, ?)";
+    "INSERT INTO pets (name, species, gender, birthdate) VALUES (?, ?, ?, ?)";
 
   getDb().run(
     sql,
-    [payload.name, payload.kind, payload.gender, payload.birthdate],
+    [payload.name, payload.species, payload.gender, payload.birthdate],
     (error) => {
       if (error) {
         return console.error(error.message);
