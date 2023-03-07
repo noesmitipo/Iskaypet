@@ -1,6 +1,7 @@
 import bodyParser from "body-parser";
-import express from "express";
 import cors from "cors";
+import express from "express";
+import { initDb } from "./db/db-config";
 import petsRouter from "./routers/pets-router";
 
 const port = 3002;
@@ -22,3 +23,4 @@ const start = () => {
 };
 
 start();
+initDb();
