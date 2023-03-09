@@ -24,9 +24,9 @@ export const getAverageAge = async (
   const birthdates = await petsDal.getBirthdatesForSpecies(species);
   const ages = birthdates.map((birthdate) => getAge(birthdate));
   const averageAge = calculateAverage(ages);
-  const standarDeviation = calculateStandardDeviation(ages);
+  const standardDeviation = calculateStandardDeviation(ages);
 
-  return { averageAge, standarDeviation };
+  return { averageAge, standardDeviation };
 };
 
 export const getById = async (id: number): Promise<Pet> => {

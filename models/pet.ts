@@ -15,5 +15,5 @@ export interface CreatePetRequest {
 
 export interface GetAverageAgeResult {
     averageAge: number;
-    standarDeviation: number;
+    standardDeviation: number;
   }
