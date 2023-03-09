@@ -12,3 +12,8 @@ export interface CreatePetRequest {
   gender: string;
   birthdate: Date;
 }
+
+export interface GetAverageAgeResult {
+    averageAge: number;
+    standarDeviation: number;
+  }

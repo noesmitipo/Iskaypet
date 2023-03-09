@@ -17,6 +17,22 @@ petsRouter.get("/", async (req: Request, res: Response) => {
   return res.status(200).json(result);
 });
 
+petsRouter.get(
+  "/most_numerous_species",
+  async (req: Request, res: Response) => {
+    const result = await petsController.getMostNumerousSpecies();
+
+    return res.status(200).json(result);
+  }
+);
+
+petsRouter.get("/average_age", async (req: Request, res: Response) => {
+  const species = req.params.species_name;
+  const result = await petsController.getAverageAge(species);
+
+  return res.status(200).json(result);
+});
+
 petsRouter.get("/:id", async (req: Request, res: Response) => {
   const id = parseInt(req.params.id);
   const result = await petsController.getById(id);
