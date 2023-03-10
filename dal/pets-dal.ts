@@ -5,15 +5,20 @@ export const create = async (payload: CreatePetRequest): Promise<void> => {
   const sql =
     "INSERT INTO pets (name, species, gender, birthdate) VALUES (?, ?, ?, ?)";
 
-  getDb().run(
-    sql,
-    [payload.name, payload.species, payload.gender, payload.birthdate],
-    (error) => {
-      if (error) {
-        return console.error(error.message);
+  await new Promise((resolve, reject) => {
+    getDb().run(
+      sql,
+      [payload.name, payload.species, payload.gender, payload.birthdate],
+      (error) => {
+        if (error) {
+          reject(error);
+        }
+        resolve(1);
       }
-    }
-  );
+    );
+  }).catch((reason) => {
+    throw new Error(reason);
+  });
 };
 
 export const getAll = async (): Promise<Pet[]> => {
@@ -53,7 +58,7 @@ export const getBirthdatesForSpecies = async (
   const sql = "SELECT birthdate FROM pets WHERE species = ?";
 
   const result = await new Promise((resolve, reject) => {
-    getDb().all(sql, ["Cat"], (error, rows) => {
+    getDb().all(sql, [species], (error, rows) => {
       if (error) {
         reject(error);
       }
@@ -73,12 +78,14 @@ export const getById = async (id: number): Promise<Pet> => {
 
   const result = await new Promise((resolve, reject) => {
     getDb().get(sql, [id], (error, row) => {
-      if (error) {
+      if (error || row === undefined) {
         reject(error);
       }
       resolve(row);
     });
-  }).catch((reason) => console.log(reason));
+  }).catch(() => {
+    throw Error("Not found");
+  });
 
   return result as Pet;
 };
