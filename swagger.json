@@ -1,0 +1,170 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Iskaypet API",
+    "description": ""
+  },
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/pets": {
+      "get": {
+        "tags": ["Pets"],
+        "summary": "Get all pets",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Pets"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Pets"],
+        "summary": "Create a pet",
+        "parameters": [
+          {
+            "name": "Pet",
+            "in": "body",
+            "description": "Pet that we want to create",
+            "schema": {
+              "$ref": "#/definitions/CreatePetRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/pets/{id}": {
+      "get": {
+        "tags": ["Pets"],
+        "summary": "Gets a pet by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Id of the pet you want to find",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Pets"
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/pets/most_numerous_species": {
+      "get": {
+        "tags": ["Pets"],
+        "summary": "Gets the most numerous species",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string",
+              "example": "Cat"
+            }
+          }
+        }
+      }
+    },
+    "/pets/average_age": {
+      "get": {
+        "tags": ["Pets"],
+        "summary": "Gets average age and standard deviation for a species",
+        "parameters": [
+          {
+            "name": "species_name",
+            "in": "query",
+            "required": true,
+            "description": "Species you want to get information from",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GetAverageAgeResult"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Pet": {
+      "required": ["id", "name", "species", "gender", "birthdate"],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "uniqueItems": true
+        },
+        "name": {
+          "type": "string"
+        },
+        "species": {
+          "type": "string"
+        },
+        "gender": {
+          "type": "string"
+        },
+        "birthdate": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "Pets": {
+      "type": "array",
+      "$ref": "#/definitions/Pet"
+    },
+    "CreatePetRequest": {
+      "required": ["name", "species", "gender", "birthdate"],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "species": {
+          "type": "string"
+        },
+        "gender": {
+          "type": "string"
+        },
+        "birthdate": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "GetAverageAgeResult": {
+      "required": ["average", "standardDeviation"],
+      "properties": {
+        "average": {
+          "type": "number"
+        },
+        "standardDeviation": {
+          "type": "number"
+        }
+      }
+    }
+  }
+}
