@@ -6,7 +6,7 @@ import petsRouter from "./routers/pets-router";
 import * as swaggerUi from "swagger-ui-express";
 import * as swaggerDocument from "./swagger.json";
 
-const port = 3002;
+const port = process.env.PORT || 3002;
 
 export const app = express();
 app.use(bodyParser.json());
